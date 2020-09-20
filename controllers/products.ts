@@ -109,7 +109,6 @@ const updateProduct = async ({
 		);
 
 		response.status = 200;
-
 		response.body = {
 			success: true,
 			data: products,
@@ -117,19 +116,26 @@ const updateProduct = async ({
 	} else {
 		response.status = 404;
 		response.body = {
-			success: true,
-			message: "No Product found.",
+			success: false,
+			msg: "No product found",
 		};
 	}
 };
 
 // @description: Delete single product
 // @route: DELETE /api/v1/product/:id
-const deleteProduct = ({ response }: { response: any }) => {
-    response.body = {
-        success: true,
-        data: products,
-    };
+const deleteProduct = ({
+	params,
+	response,
+}: {
+	params: { id: string };
+	response: any;
+}) => {
+    products = products.filter( p => p.id !== params.id )
+	response.body = {
+		success: true,
+		msg: "Product removed.",
+	};
 };
 
 export { getProducts, getProduct, addProduct, updateProduct, deleteProduct };
